@@ -2,5 +2,24 @@
   "dependencies": {
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3"
-  }
+  },
+  "name": "employeetracker_sfelbeck",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SFelbeck/EmployeeTracker_SFelbeck.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SFelbeck/EmployeeTracker_SFelbeck/issues"
+  },
+  "homepage": "https://github.com/SFelbeck/EmployeeTracker_SFelbeck#readme"
 }
