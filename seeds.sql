@@ -15,7 +15,7 @@ VALUES ("Accountant", 45.56, 1),
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Noombah", "Krancher", 1),
        ("Steve", "Just Steve", 1),
-       ("Stefan", "Thegreat", 2),
+       ("Stefan", "Felbeck", 2),
        ("Greg", "Seymor", 3, 2),
        ("Jonmathy", "Jackson", 3, 2),
        ("Madison", "Lacke", 4),
