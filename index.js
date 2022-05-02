@@ -11,12 +11,13 @@ const db = mysql.createConnection(
     console.log('Connected to employees_db database')
 );
 
+mainMenu();
 function mainMenu(){
     inquirer.prompt ([
         {
             type: 'list',
             name: 'menu',
-            choices: ['View Departments', 'View Roles', 'View Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role']
+            choices: ['View Departments', 'View Roles', 'View Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role', 'Exit']
         }
     ]).then(res => {
         if (res.menu === 'View Departments'){
@@ -34,21 +35,30 @@ function mainMenu(){
         }else if (res.menu === 'Update Employee Role'){
             updateEmployee();
         } else {
-            console.log('Error: This message shouldnt be displaying here');
+            process.exit();
         }
     })
 }
 
-function viewDepartments(){
-
+const viewDepartments = () => {
+    db.query('SELECT * FROM department', function (err, results){
+        console.log(results);
+        mainMenu();
+    })
 }
 
-function viewRoles(){
-
+const viewRoles = () => {
+    db.query('SELECT * FROM roles', function (err, results){
+        console.log(results);
+        mainMenu();
+    })
 }
 
-function viewEmployees(){
-
+const viewEmployees = () => {
+    db.query('SELECT * FROM employee', function (err, results){
+        console.log(results);
+        mainMenu();
+    })
 }
 
 function addDepartment(){
@@ -64,5 +74,5 @@ function addEmployee(){
 }
 
 function updateEmployee(){
-    
+
 }
