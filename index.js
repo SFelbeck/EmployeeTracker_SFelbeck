@@ -85,13 +85,12 @@ const addDepartment = () => {
 }
 //adds a new role to the roles table based purely on inquirer inputs (side note: this doesnt work yet and i have no idea why)
 const addRole = () => {
-    // const sql = 'SELECT department.name FROM department';
-    // db.query(sql, (err, res) => {
-    //     if (err){
-    //         throw err;
-    //     }
-    //     const departments = res;
-    // })
+    const sql = 'SELECT * FROM department';
+    db.query(sql, (err, res) => {
+        if (err){
+            throw err;
+        }
+        const departments = res;
     inquirer.prompt ([
         {
             type: 'input',
@@ -103,27 +102,28 @@ const addRole = () => {
             name: 'salary',
             message: 'In decimal form, what is the average salary of the new role?'
         },
-        // {
-        //     type: 'list',
-        //     name: 'department',
-        //     message: [...departments]
-        // }
         {
-            type: 'input',
-            name: 'department',
-            message: 'What is the id number of the department this role is under?'
+            type: 'list',
+            name: 'departmentName',
+            message: "what department is this role in?",
+            choices: res.map(department => department.name)
         }
         // a .then statement that uses our added values and inserts them into the roles table, console logs on success and then returns to the main menu
     ]).then(results => {
-        // let depIdArray = results.filter(word => word === results.departments);
-        // db.query('SELECT ')
+        const selectedDepartment = res.find(department => department.name === results.departmentName)
         db.query(
-            'INSERT INTO roles (name, salary, department_id) VALUES (?, ?, ?)',
-            [results.name, results.salary, results.department], (err, data) => {
+            'INSERT INTO roles SET ?', {
+                title: results.title,
+                salary: results.salary,
+                department_id: selectedDepartment.id
+            }, (err, data) => {
+            if(err)
+                throw err,
             console.log('Added new role!');
             mainMenu();
         })
     })
+})
 }
 
 //adds a new employee to the employee table based purely on inquirer inputs (side note: I would like to clean this up to prevent errors before this is graded)
@@ -161,36 +161,29 @@ const addEmployee = () => {
 // In theory this function updates the employee's role value (or others possibly), but it currently does not work
 const updateEmployee = () => {
     inquirer.prompt(
+        
         {
-        type:'input',
-        message: 'Please enter the first name of the employee',
-        name: 'first_name'
+            type: 'list',
+            name: 'selection',
+            choices: [employee => employee.first_name]
         }
-        // ,
-        // {
-        //     type: 'list',
-        //     name: 'selection',
-        //     choices: ['First name', 'Last name', 'role', 'manager']
-        // }
     ).then(res =>{
-        let firstResult = res;
-        db.query('SELECT id FROM employee WHERE first_name = ?', res.first_name, (err, data) =>{
+        let updateEmployee = (res.selection);
+        db.query('SELECT * FROM roles', res.first_name, (err, data) =>{
             // if(res.selection === 'First name'){
                 inquirer.prompt(
                     {
-                        type: 'input',
-                        name: 'newValue',
-                        message: 'What is the new value?'
+                        type: 'list',
+                        name: 'newrole',
+                        message: 'What is the new role?',
+                        choices: res.map(roles => roles.title)
                     }
                 ).then(results => {
-                    db.query('UPDATE employee SET (?) WHERE role_id', [results.newValue]);
+                    const chosenRole = results.find(roles => roles.title === answer.newRole)
+                    db.query('UPDATE employee SET ? WHERE first_name = ' + "'" + updateEmployee + "'", {newRole: "" + chosenRole + "",});
                     mainMenu();
                 })
-                // ).then(results => {
-                //     db.query('UPDATE employee SET (?) WHERE (?)', [results.newValue, firstResult.selection]);
-                //     mainMenu();
-                // })
-            // }
+                
             
         })
     })

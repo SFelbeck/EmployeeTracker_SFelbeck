@@ -1,11 +1,10 @@
--- inserts some example departments
+USE employees_db;
 INSERT INTO department (name)
 VALUES ("Accounting"),
        ("Programming"),
        ("Legal"),
        ("Velociraptor Handling");
 
---inserts some example roles
 INSERT INTO roles (title, salary, department_id)
 VALUES ("Accountant", 4556, 1),
        ("Lead Programmer", 10087, 2),
@@ -14,7 +13,6 @@ VALUES ("Accountant", 4556, 1),
        ("Jury", 6042, 3),
        ("victem", 579, 4);
 
---inserts some example employees
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Noombah", "Krancher", 1, NULL),
        ("Steve", "Just Steve", 1, NULL),
